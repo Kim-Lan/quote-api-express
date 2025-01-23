@@ -15,6 +15,11 @@ quote.post('/', (req, res) => {
 
 });
 
+// GET route for retrieving a quote by index
+quote.get('/:index', (req, res) => {
+
+});
+
 // PUT route for updating a quote by index
 quote.put('/:index', (req, res) => {
 
