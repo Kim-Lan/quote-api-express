@@ -4,11 +4,11 @@ const { getRandomQuote, getAllQuotes, addQuote, getQuoteById, updateQuoteById, d
 // GET route for retrieving random quote
 quote.get('/', getRandomQuote);
 
-// GET route for retrieving all quotes
-quote.get('/all', getAllQuotes);
-
 // POST route for adding a new quote
 quote.post('/', addQuote);
+
+// GET route for retrieving all quotes
+quote.get('/all', getAllQuotes);
 
 // GET route for retrieving a quote by id
 quote.get('/:id', getQuoteById);

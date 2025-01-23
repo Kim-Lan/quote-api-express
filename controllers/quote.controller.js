@@ -16,6 +16,13 @@ const getAllQuotes = (req, res) => {
 //@route POST /api/quote
 //@access public
 const addQuote = (req, res) => {
+  const { quote, author, date } = req.body;
+  
+  if (!quote || !author || !date) {
+    res.status(400);
+    throw new Error("All fields are required");
+  }
+
   res.status(201).json({ message: 'Add a quote' });
 };
 

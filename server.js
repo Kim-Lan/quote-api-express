@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const api = require('./routes/index.js');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', api);
 app.use(express.static('public'));
+app.use(errorHandler);
 
 // GET Route for homepage
 app.get('/', (req, res) =>
