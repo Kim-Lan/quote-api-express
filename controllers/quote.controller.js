@@ -1,17 +1,20 @@
 const asyncHandler = require('express-async-handler');
+const Quote = require('../models/quote.model');
 
 //@desc Get random quote
 //@route GET /api/quote
 //@access public
 const getRandomQuote = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'Get random quote' });
+  const randomQuote = await Quote.aggregate([{ $sample: { size: 1 } }]);
+  res.status(200).json(randomQuote[0]);
 });
 
 //@desc Get all quotes
 //@route GET /api/quote/all
 //@access public
 const getAllQuotes = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'Get all quotes' });
+  const allQuotes = await Quote.find();
+  res.status(200).json(allQuotes);
 });
 
 //@desc Add quote
@@ -20,33 +23,39 @@ const getAllQuotes = asyncHandler(async (req, res) => {
 const addQuote = asyncHandler(async (req, res) => {
   const { quote, author, date } = req.body;
 
-  if (!quote || !author || !date) {
+  if (!quote || !author) {
     res.status(400);
-    throw new Error("All fields are required");
+    throw new Error("Quote and author are required");
   }
 
-  res.status(201).json({ message: 'Add a quote' });
+  const newQuote = await Quote.create({ quote, author, date });
+
+  res.status(201).json(newQuote);
 });
 
 //@desc Get quote by id
 //@route GET /api/quote/:id
 //@access public
 const getQuoteById = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Get quote ${req.params.id}` });
+  const quote = await Quote.findById(req.params.id);
+  res.status(200).json(quote);
 });
 
 //@desc Update quote by id
 //@route PUT /api/quote/:id
 //@access public
 const updateQuoteById = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Update quote ${req.params.id}` });
+  const { quote, author, date } = req.body;
+  const oldQuote = await Quote.findByIdAndUpdate(req.params.id, { quote, author, date });
+  res.status(200).json(oldQuote);
 });
 
 //@desc Delete quote by id
 //@route DELETE /api/quote/:id
 //@access public
 const deleteQuoteById = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Delete quote ${req.params.id}` });
+  const deletedQuote = await Quote.findByIdAndDelete(req.params.id);
+  res.status(200).json(deletedQuote);
 });
 
 module.exports = { getRandomQuote, getAllQuotes, addQuote, getQuoteById, updateQuoteById, deleteQuoteById}

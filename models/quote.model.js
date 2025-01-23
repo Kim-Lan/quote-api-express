@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose;
 
 const quoteSchema = new Schema({
   quote: {
@@ -19,4 +19,4 @@ const quoteSchema = new Schema({
   timestamps: true,
 });
 
-modules.exports = mongoose.model('Quote', quoteSchema);
+module.exports = model('Quote', quoteSchema);
