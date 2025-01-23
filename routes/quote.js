@@ -2,32 +2,32 @@ const quote = require('express').Router();
 
 // GET route for retrieving random quote
 quote.get('/', (req, res) => {
-  res.send('Get random quote');
+  res.json({ message: 'Get random quote' });
 });
 
 // GET route for retrieving all quotes
 quote.get('/all', (req, res) => {
-  res.send('Get all quotes');
+  res.json({ message: 'Get all quotes' });
 });
 
 // POST route for adding a new quote
 quote.post('/', (req, res) => {
-
+  res.json({ message: 'Add a quote' });
 });
 
-// GET route for retrieving a quote by index
-quote.get('/:index', (req, res) => {
-
+// GET route for retrieving a quote by id
+quote.get('/:id', (req, res) => {
+  res.json({ message: `Get quote ${req.params.id}` });
 });
 
-// PUT route for updating a quote by index
-quote.put('/:index', (req, res) => {
-
+// PUT route for updating a quote by id
+quote.put('/:id', (req, res) => {
+  res.json({ message: `Update quote ${req.params.id}` });
 });
 
-// DELETE route for deleting a quote by index
-quote.delete('/:index', (req, res) => {
-
+// DELETE route for deleting a quote by id
+quote.delete('/:id', (req, res) => {
+  res.json({ message: `Delete quote ${req.params.id}` });
 });
 
 module.exports = quote;
