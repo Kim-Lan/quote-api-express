@@ -38,6 +38,12 @@ const addQuote = asyncHandler(async (req, res) => {
 //@access public
 const getQuoteById = asyncHandler(async (req, res) => {
   const quote = await Quote.findById(req.params.id);
+
+  if (!quote) {
+    res.status(404);
+    throw new Error("Quote not found");
+  }
+
   res.status(200).json(quote);
 });
 
@@ -45,9 +51,8 @@ const getQuoteById = asyncHandler(async (req, res) => {
 //@route PUT /api/quote/:id
 //@access public
 const updateQuoteById = asyncHandler(async (req, res) => {
-  const { quote, author, date } = req.body;
-  const oldQuote = await Quote.findByIdAndUpdate(req.params.id, { quote, author, date });
-  res.status(200).json(oldQuote);
+  const updatedQuote = await Quote.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.status(200).json(updatedQuote);
 });
 
 //@desc Delete quote by id
