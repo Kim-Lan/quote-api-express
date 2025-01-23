@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const api = require('./routes/index.js');
 const errorHandler = require('./middleware/errorHandler');
+const connectDb = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,3 +23,5 @@ app.get('/', (req, res) =>
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+connectDb();
