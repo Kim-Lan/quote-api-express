@@ -1,11 +1,22 @@
 const express = require('express');
+const path = require('path');
+const api = require('./routes/index.js');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!');
-});
+// Middleware for parsing JSON and urlencoded form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.use('/api', api);
+app.use(express.static('public'));
+
+// GET Route for homepage
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
